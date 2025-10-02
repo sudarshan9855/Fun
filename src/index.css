@@ -1,0 +1,180 @@
+@import "katex/dist/katex.min.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Astronomy-themed dark mode color system */
+    --background: 240 30% 6%;
+    --foreground: 220 20% 95%;
+
+    --card: 240 25% 10%;
+    --card-foreground: 220 20% 95%;
+
+    --popover: 240 25% 10%;
+    --popover-foreground: 220 20% 95%;
+
+    /* Nebula purple primary - cosmic focus */
+    --primary: 270 70% 65%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 270 80% 75%;
+
+    /* Deep space secondary */
+    --secondary: 240 20% 15%;
+    --secondary-foreground: 220 20% 95%;
+
+    --muted: 240 15% 18%;
+    --muted-foreground: 220 15% 60%;
+
+    /* Comet teal accent - energy and discovery */
+    --accent: 180 75% 55%;
+    --accent-foreground: 0 0% 100%;
+    --accent-glow: 180 85% 65%;
+
+    /* Starlight blue */
+    --starlight: 210 85% 65%;
+    --starlight-glow: 210 90% 75%;
+
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 15% 22%;
+    --input: 240 20% 12%;
+    --ring: 270 70% 65%;
+
+    --radius: 1.25rem;
+
+    /* Cosmic gradients */
+    --gradient-cosmos: linear-gradient(135deg, hsl(240 30% 6%), hsl(260 40% 12%), hsl(240 30% 8%));
+    --gradient-nebula: linear-gradient(135deg, hsl(270 70% 65%), hsl(290 60% 70%));
+    --gradient-starlight: linear-gradient(135deg, hsl(210 85% 65%), hsl(180 75% 55%));
+    --gradient-comet: linear-gradient(135deg, hsl(180 75% 55%), hsl(200 70% 60%));
+
+    /* Glowing shadows */
+    --shadow-sm: 0 2px 12px hsl(0 0% 0% / 0.5);
+    --shadow-md: 0 4px 20px hsl(0 0% 0% / 0.6);
+    --shadow-glow: 0 0 32px hsl(270 80% 75% / 0.5);
+    --shadow-starlight: 0 0 28px hsl(210 90% 75% / 0.4);
+    --shadow-cosmic: 0 0 40px hsl(180 85% 65% / 0.45);
+
+    /* Smooth cosmic animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    font-feature-settings: "rlig" 1, "calt" 1;
+    background: linear-gradient(180deg, hsl(240 30% 6%) 0%, hsl(260 35% 8%) 50%, hsl(240 30% 6%) 100%);
+    background-attachment: fixed;
+  }
+
+  /* Cosmic starfield background - CSS fallback */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(2px 2px at 20% 30%, hsl(0 0% 100% / 0.3), transparent),
+      radial-gradient(2px 2px at 60% 70%, hsl(210 90% 80% / 0.2), transparent),
+      radial-gradient(1px 1px at 50% 50%, hsl(270 80% 75% / 0.3), transparent),
+      radial-gradient(1px 1px at 80% 10%, hsl(180 75% 55% / 0.2), transparent),
+      radial-gradient(2px 2px at 90% 60%, hsl(0 0% 100% / 0.2), transparent),
+      radial-gradient(1px 1px at 33% 85%, hsl(210 85% 70% / 0.2), transparent),
+      radial-gradient(1px 1px at 15% 60%, hsl(0 0% 100% / 0.3), transparent);
+    background-size: 200% 200%;
+    background-position: 50% 50%;
+    pointer-events: none;
+    z-index: 0;
+    animation: twinkle 8s ease-in-out infinite;
+  }
+
+  @keyframes twinkle {
+    0%, 100% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
+}
+
+/* KaTeX styles moved to top */
+
+@layer components {
+  .message-bubble {
+    @apply rounded-2xl px-6 py-4 transition-all duration-300 relative;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    z-index: 1;
+  }
+
+  .message-user {
+    background: var(--gradient-nebula);
+    @apply text-primary-foreground ml-auto;
+    box-shadow: var(--shadow-glow);
+  }
+
+  .message-tutor {
+    @apply bg-card border border-border/50;
+    box-shadow: 0 0 20px hsl(210 85% 65% / 0.15), var(--shadow-md);
+  }
+
+  .message-tutor::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 1rem;
+    padding: 1px;
+    background: linear-gradient(135deg, hsl(210 85% 65% / 0.3), hsl(270 70% 65% / 0.2), hsl(180 75% 55% / 0.3));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .chip-button {
+    @apply rounded-full px-5 py-2.5 text-sm font-medium transition-all duration-300;
+    @apply bg-secondary/80 text-foreground border border-primary/20;
+    @apply hover:bg-secondary hover:border-primary/40 hover:scale-105;
+    @apply backdrop-blur-sm relative z-10;
+    box-shadow: 0 0 12px hsl(270 70% 65% / 0.2);
+  }
+
+  .chip-button:hover {
+    box-shadow: 0 0 20px hsl(270 70% 65% / 0.4), var(--shadow-glow);
+  }
+
+  .mode-toggle {
+    @apply rounded-xl px-4 py-2 text-xs font-medium transition-all duration-300;
+    @apply hover:scale-105 active:scale-95 border backdrop-blur-sm;
+  }
+
+  .mode-toggle-active {
+    background: var(--gradient-nebula);
+    @apply text-primary-foreground border-primary/40;
+    box-shadow: var(--shadow-glow);
+  }
+
+  .mode-toggle-inactive {
+    @apply bg-muted/50 text-muted-foreground border-border/50;
+    @apply hover:bg-muted hover:border-primary/30;
+  }
+}
